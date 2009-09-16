@@ -1,7 +1,7 @@
 %define	module	dimp
 %define	name	horde-%{module}
-%define version 1.1
-%define release %mkrel 3
+%define version 1.1.3
+%define release %mkrel 1
 
 %define _requires_exceptions pear(Horde.*)
 
@@ -30,6 +30,28 @@ allow a more dynamic user experience (thus DIMP... Dynamic IMP).
 %install
 rm -rf %{buildroot}
 
+# apache configuration
+install -d -m 755 %{buildroot}%{_webappconfdir}
+cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
+# %{name} Apache configuration file
+
+<Directory %{_datadir}/horde/%{module}/lib>
+    Deny from all
+</Directory>
+
+<Directory %{_datadir}/horde/%{module}/locale>
+    Deny from all
+</Directory>
+
+<Directory %{_datadir}/horde/%{module}/scripts>
+    Deny from all
+</Directory>
+
+<Directory %{_datadir}/horde/%{module}/templates>
+    Deny from all
+</Directory>
+EOF
+
 # horde configuration
 install -d -m 755 %{buildroot}%{_sysconfdir}/horde/registry.d
 cat > %{buildroot}%{_sysconfdir}/horde/registry.d/%{module}.php <<'EOF'
@@ -51,24 +73,16 @@ EOF
 find . -name .htaccess -exec rm -f {} \;
 
 # install files
-install -d -m 755 %{buildroot}%{_var}/www/horde/%{module}
 install -d -m 755 %{buildroot}%{_datadir}/horde/%{module}
-install -d -m 755 %{buildroot}%{_sysconfdir}/horde
-cp -pR *.php %{buildroot}%{_var}/www/horde/%{module}
-cp -pR themes %{buildroot}%{_var}/www/horde/%{module}
-cp -pR js %{buildroot}%{_var}/www/horde/%{module}
+cp -pR *.php %{buildroot}%{_datadir}/horde/%{module}
+cp -pR themes %{buildroot}%{_datadir}/horde/%{module}
+cp -pR js %{buildroot}%{_datadir}/horde/%{module}
 cp -pR lib %{buildroot}%{_datadir}/horde/%{module}
 cp -pR locale %{buildroot}%{_datadir}/horde/%{module}
 cp -pR templates %{buildroot}%{_datadir}/horde/%{module}
 cp -pR config %{buildroot}%{_sysconfdir}/horde/%{module}
 
-# use symlinks to recreate original structure
-pushd %{buildroot}%{_var}/www/horde/%{module}
-ln -s ../../../..%{_sysconfdir}/horde/%{module} config
-ln -s ../../../..%{_datadir}/horde/%{module}/lib .
-ln -s ../../../..%{_datadir}/horde/%{module}/locale .
-ln -s ../../../..%{_datadir}/horde/%{module}/templates .
-popd
+install -d -m 755 %{buildroot}%{_sysconfdir}/horde
 pushd %{buildroot}%{_datadir}/horde/%{module}
 ln -s ../../../..%{_sysconfdir}/horde/%{module} config
 popd
@@ -91,8 +105,8 @@ fi
 %files
 %defattr(-,root,root)
 %doc README COPYING docs
+%config(noreplace) %{_webappconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/horde/registry.d/%{module}.php
 %config(noreplace) %{_sysconfdir}/horde/%{module}
 %{_datadir}/horde/%{module}
-%{_var}/www/horde/%{module}
 

@@ -1,7 +1,7 @@
 %define	module	dimp
 %define	name	horde-%{module}
 %define version 1.1.3
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define _requires_exceptions pear(Horde.*)
 
@@ -16,7 +16,6 @@ Source0:	ftp://ftp.horde.org/pub/%{module}/%{module}-h3-%{version}.tar.gz
 Requires(post):	rpm-helper
 Requires:	horde >= 3.0
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 IMP is a project to create a version of IMP utilizing AJAX-like technologies to

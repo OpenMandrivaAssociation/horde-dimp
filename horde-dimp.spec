@@ -113,3 +113,34 @@ fi
 %config(noreplace) %{_sysconfdir}/horde/%{module}
 %{_datadir}/horde/%{module}
 
+
+
+%changelog
+* Mon Aug 02 2010 Thomas Spuhler <tspuhler@mandriva.org> 1.1.3-3mdv2011.0
++ Revision: 564908
+- Increased release for rebuild
+
+* Mon Nov 30 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.1.3-2mdv2010.1
++ Revision: 472086
+- restrict default access permissions to localhost only, as per new policy
+
+* Wed Sep 16 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.1.3-1mdv2010.0
++ Revision: 443650
+- new version
+- new files setup
+
+* Fri Sep 11 2009 Thierry Vignaud <tv@mandriva.org> 1.1-3mdv2010.0
++ Revision: 437880
+- rebuild
+
+* Wed Nov 19 2008 Guillaume Rousse <guillomovitch@mandriva.org> 1.1-2mdv2009.1
++ Revision: 304680
+- fix automatic dependencies
+
+* Sun Oct 19 2008 Guillaume Rousse <guillomovitch@mandriva.org> 1.1-1mdv2009.1
++ Revision: 295326
+- import horde-dimp
+
+
+* Sun Oct 19 2008 Guillaume Rousse <guillomovitch@mandriva.org> 1.1-1mdv2009.1
+- first mdv release

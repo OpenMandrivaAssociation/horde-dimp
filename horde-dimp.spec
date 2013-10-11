@@ -1,13 +1,10 @@
 %define	module	dimp
-%define	name	horde-%{module}
-%define version 1.1.3
-%define release %mkrel 3
 
-%define _requires_exceptions pear(Horde.*)
+%define __noautoreq 'pear\\(Horde.*\\)'
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		horde-%{module}
+Version:	1.1.3
+Release:	4
 Summary:	The Horde Dynamic Internet Messaging Program
 License:	GPL
 Group:		System/Servers
@@ -27,8 +24,6 @@ allow a more dynamic user experience (thus DIMP... Dynamic IMP).
 %build
 
 %install
-rm -rf %{buildroot}
-
 # apache configuration
 install -d -m 755 %{buildroot}%{_webappconfdir}
 cat > %{buildroot}%{_webappconfdir}/%{name}.conf <<EOF
@@ -92,7 +87,6 @@ for file in %{buildroot}%{_sysconfdir}/horde/%{module}/*.dist; do
 done
 
 %clean
-rm -rf %{buildroot}
 
 %post
 if [ $1 = 1 ]; then
@@ -102,7 +96,6 @@ if [ $1 = 1 ]; then
 fi
 
 %files
-%defattr(-,root,root)
 %doc README COPYING docs
 %config(noreplace) %{_webappconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/horde/registry.d/%{module}.php

@@ -4,7 +4,7 @@
 
 Name:		horde-%{module}
 Version:	1.1.3
-Release:	4
+Release:	5
 Summary:	The Horde Dynamic Internet Messaging Program
 License:	GPL
 Group:		System/Servers
